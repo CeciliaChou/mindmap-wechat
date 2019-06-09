@@ -1,0 +1,16 @@
+<van-panel use-footer-slot="{{useFooterSlot}}">
+    <van-row slot="header">
+        <van-col span="4">
+            <image class="avatar" src="{{avatarUrl}}"></image>
+        </van-col>
+        <van-col class="title" span="20">
+            <text>{{title}}</text>
+        </van-col>
+    </van-row>
+    <view>
+        {{description}}
+        Created by {{creator}}
+    </view>
+    <slot></slot>
+    <slot slot="footer" name="footer"></slot>
+</van-panel>

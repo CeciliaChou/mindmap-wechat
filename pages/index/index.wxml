@@ -1,0 +1,88 @@
+<!--index.wxml-->
+<view>
+    <view>
+        <van-tag class="tag" size="medium" wx:for="{{labels}}" wx:key="id"
+                 type="{{selectedLabel === item.id ? 'success' : 'primary'}}"
+                 data-id="{{item.id}}" bindtap="tapLabel" bind:longpress="unsubscribe">{{item.name}}
+        </van-tag>
+        <van-tag class="tag" size="medium" bindtap="requestAddLabel">
+            Add label
+        </van-tag>
+    </view>
+    <van-tabs wx:if="{{selectedLabel}}" swipeable>
+        <van-tab title="Questions">
+            <van-collapse value="{{activeQuestion}}" bind:change="activeQuestionChange" accordion>
+                <van-collapse-item wx:for="{{questions}}" wx:key="id" name="{{item.id}}" title="{{item.title}}">
+                    <entity-detail title="{{item.title}}" description="{{item.description}}" useFooterSlot="{{true}}"
+                                   creator="{{item.creator.login}}" avatarUrl="{{item.creator.avatarUrl}}">
+                        <van-cell-group custom-class="nested-list" title="Ideas addressing this question">
+                            <entity-detail wx:for="{{questionIdeas[item.id].items}}" wx:key="id"
+                                           wx:for-item="nestedItem"
+                                           creator="{{nestedItem.creator.login}}"
+                                           title="{{nestedItem.description}}"
+                                           avatarUrl="{{nestedItem.creator.avatarUrl}}"/>
+                        </van-cell-group>
+                        <view slot="footer">
+                            <van-button type="success" size="small" data-type="{{'question'}}"
+                                        bindtap="showAddressing">Add</van-button>
+                        </view>
+                    </entity-detail>
+                </van-collapse-item>
+            </van-collapse>
+            <van-button bindtap="requestAddQuestion">Add item</van-button>
+        </van-tab>
+        <van-tab title="Ideas">
+            <van-collapse value="{{activeIdea}}" bind:change="activeIdeaChange" accordion>
+                <van-collapse-item wx:for="{{ideas}}" wx:key="id" name="{{item.id}}" title="{{item.description}}">
+                    <entity-detail title="{{item.description}}" useFooterSlot="{{true}}"
+                                   creator="{{item.creator.login}}" avatarUrl="{{item.creator.avatarUrl}}">
+                        <van-cell-group custom-class="nested-list" title="Questions addressed by this idea">
+                            <entity-detail wx:for="{{ideaQuestions[item.id].items}}" wx:key="id"
+                                           wx:for-item="nestedItem"
+                                           creator="{{nestedItem.creator.login}}"
+                                           title="{{nestedItem.title}}"
+                                           description="{{nestedItem.description}}"
+                                           avatarUrl="{{nestedItem.creator.avatarUrl}}"/>
+                        </van-cell-group>
+                        <view slot="footer">
+                            <van-button type="success" size="small" data-type="{{'idea'}}"
+                                        bindtap="showAddressing">Add</van-button>
+                        </view>
+                    </entity-detail>
+                </van-collapse-item>
+            </van-collapse>
+            <van-button bindtap="requestAddIdea">Add item</van-button>
+        </van-tab>
+    </van-tabs>
+
+    <van-popup show="{{addingLabel}}" bind:close="closeAddLabel" custom-class="bottom" position="bottom">
+        <van-panel title="Add label" use-footer-slot>
+            <van-field value="{{addLabelName}}" bind:change="setAddLabelName"/>
+            <view slot="footer">
+                <van-buttom size="small" bindtap="confirmAddLabel">Submit</van-buttom>
+            </view>
+        </van-panel>
+    </van-popup>
+
+    <van-popup show="{{addType}}" bind:close="closeAdd" custom-class="bottom" position="bottom">
+        <van-panel title="Add {{addType}}" use-footer-slot>
+            <van-field hidden="{{addType === 'idea'}}" placeholder="title" value="{{addTitle}}"
+                       bind:change="setAddTitle"></van-field>
+            <van-field type="textarea" autosize placeholder="description" value="{{addDescription}}"
+                       bind:change="setAddDescription"></van-field>
+            <view slot="footer">
+                <van-button size="small" bindtap="confirmAdd">Submit</van-button>
+            </view>
+        </van-panel>
+    </van-popup>
+
+    <van-action-sheet
+            show="{{addressing}}"
+            actions="{{addressingActions}}"
+            cancel-text="Cancel"
+            bind:close="closeAddressing"
+            bind:select="selectAddressing"
+    />
+
+    <van-dialog id="van-dialog" />
+</view>

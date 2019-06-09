@@ -1,0 +1,33 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "usingComponents": {
+    "van-button": "component/button/index",
+    "van-tag": "component/tag/index",
+    "van-collapse": "component/collapse/index",
+    "van-collapse-item": "component/collapse-item/index",
+    "van-popup": "component/popup/index",
+    "van-cell-group": "component/cell-group/index",
+    "van-field": "component/field/index",
+    "van-cell": "component/cell/index",
+    "van-panel": "component/panel/index",
+    "van-tab": "component/tab/index",
+    "van-tabs": "component/tabs/index",
+    "van-row": "component/row/index",
+    "van-col": "component/col/index",
+    "van-action-sheet": "component/action-sheet/index",
+    "van-icon": "component/icon/index",
+    "van-dialog": "component/dialog/index",
+    "entity-detail": "custom-component/entity-detail/entity-detail"
+  },
+  "sitemapLocation": "sitemap.json"
+}
